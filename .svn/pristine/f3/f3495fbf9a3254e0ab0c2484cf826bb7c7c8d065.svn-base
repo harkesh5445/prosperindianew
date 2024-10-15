@@ -1,0 +1,178 @@
+<?php
+
+require_once ('../includes/header.php');
+
+
+if(!in_array('admin',$permissions) || !in_array('all',$permissions)){
+    header(BASE_URL.'dashboard/index.php');
+}
+
+global $db;
+global $con;
+
+$roles = $db->fetch($con, ROLES, array('isDeleted' => 0));
+if($_SESSION['is_superadmin'] == 1){
+// $roles = $db->fetch($con, ROLES, array('isDeleted' => 0));   
+$users = $db->fetch($con, USERS, array('isDeleted' => 0));
+}else{
+    $users = $db->fetch($con, USERS, array('isDeleted' => 0,'is_superadmin'=>0)); 
+    // $roles = array();
+    // $rolesData = $db->fetch($con, ROLES, array('isDeleted' => 0));
+    // foreach($rolesData as $k=>$v){
+    //     if($v['name'] == 'SuperAdmin'){
+    //      continue;
+    //     }
+    //     $roles[] = $v;
+    // }
+}
+$login_logs = $db->fetch($con, LOGIN_LOGS);
+$permissions = $db->fetch($con, PERMISSIONS, array('isDeleted' => 0));
+$contact_us = $db->fetch($con, CONTACT_US);
+
+$total_roles = !empty($roles) ? count($roles) : 0;
+$total_users = !empty($users) ? count($users) : 0;
+$total_logs = !empty($login_logs) ? count($login_logs) : 0;
+$total_permissions = !empty($permissions) ? count($permissions) : 0;
+$total_contacts = !empty($contact_us) ? count($contact_us) : 0;
+
+?>
+
+<div class="container-fluid page-body-wrapper" style="padding-top: 33px;">
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="font-weight-bold mb-0">Prosper India Dashboard</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <?php
+               if(in_array('Administrator',$permissions)){
+                    ?>
+
+                    <div class="col-md-3 grid-margin stretch-card" id="pifRoles">
+
+                        <div class="card">
+                            <a href="<?= BASE_URL ?>dashboard/roles.php">
+                                <div class="card-body">
+
+                                    <p class="card-title text-md-center text-xl-left">Roles</p>
+
+                                    <div
+                                        class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="rcount">
+                                            <?= $total_roles; ?></h3>
+                                        <i class="ti-calendar icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+                                    <!-- <p class="mb-0 mt-2 text-danger">0.12% <span class="text-black ms-1"><small>(30
+                                        days)</small></span></p> -->
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 grid-margin stretch-card " id="pifPermissions">
+                        <div class="card">
+                            <a href="<?= BASE_URL ?>dashboard/permissions.php">
+                                <div class="card-body">
+
+                                    <p class="card-title text-md-center text-xl-left">Permissions</p>
+
+                                    <div
+                                        class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="pcount">
+                                            <?= $total_permissions; ?></h3>
+                                        <i class="ti-lock icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+                                    <!-- <p class="mb-0 mt-2 text-danger">0.47% <span class="text-black ms-1"><small>(30
+                                        days)</small></span></p> -->
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                <?php
+                }
+                ?>
+
+                <div class="col-md-3 grid-margin stretch-card">
+                    <div class="card">
+                        <a href="<?= BASE_URL ?>dashboard/users.php">
+                            <div class="card-body">
+
+                                <p class="card-title text-md-center text-xl-left">Users</p>
+
+                                <div
+                                    class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="ucount">
+                                        <?= $total_users; ?> </h3>
+                                    <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card">
+                    <div class="card">
+                        <a href="<?= BASE_URL ?>dashboard/contacts.php">
+                            <div class="card-body">
+
+                                <p class="card-title text-md-center text-xl-left">Contacts</p>
+
+                                <div
+                                    class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="ccount">
+                                        <?= $total_contacts; ?></h3>
+                                    <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-3 grid-margin stretch-card">
+                    <div class="card">
+                        <a href="<?= BASE_URL ?>dashboard/logs.php">
+                            <div class="card-body">
+
+                                <p class="card-title text-md-center text-xl-left">Login Logs</p>
+
+                                <div
+                                    class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="lcount">
+                                        <?= $total_logs; ?></h3>
+                                    <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center">
+                <div> © 2024 Prosper India Foundation. All rights reserved. </div>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+</div>
+<?php
+
+require_once ('../includes/footer.php');
+
+?>

@@ -1,0 +1,194 @@
+<?php
+
+require_once ('../includes/header.php');
+
+
+if (!in_array('admin', $permissions) || !in_array('all', $permissions)) {
+    header(BASE_URL . 'dashboard/index.php');
+}
+// print_r($permissions);
+// die("========");
+global $db;
+global $con;
+
+$roles = $db->fetch($con, ROLES, array('isDeleted' => 0));
+if ($_SESSION['is_superadmin'] == 1) {
+    // $roles = $db->fetch($con, ROLES, array('isDeleted' => 0));   
+    $users = $db->fetch($con, USERS, array('isDeleted' => 0));
+} else {
+    $users = $db->fetch($con, USERS, array('isDeleted' => 0, 'is_superadmin' => 0));
+    // $roles = array();
+    // $rolesData = $db->fetch($con, ROLES, array('isDeleted' => 0));
+    // foreach($rolesData as $k=>$v){
+    //     if($v['name'] == 'SuperAdmin'){
+    //      continue;
+    //     }
+    //     $roles[] = $v;
+    // }
+}
+$login_logs = $db->fetch($con, LOGIN_LOGS);
+$permissions = $db->fetch($con, PERMISSIONS, array('isDeleted' => 0));
+$contact_us = $db->fetch($con, CONTACT_US);
+
+$total_roles = !empty($roles) ? count($roles) : 0;
+$total_users = !empty($users) ? count($users) : 0;
+$total_logs = !empty($login_logs) ? count($login_logs) : 0;
+$total_permissions = !empty($permissions) ? count($permissions) : 0;
+$total_contacts = !empty($contact_us) ? count($contact_us) : 0;
+
+?>
+<style>
+    .card {
+        border: none;
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card a {
+        text-decoration: none;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: aliceblue !important;
+    }
+
+    .card .card-body {
+        padding: 2.2rem 1.437rem;
+    }
+
+    .bg-dark {
+        background-color: #babfc4 !important;
+    }
+
+    .text-center {
+        flex: 1;
+    }
+
+    .font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        /* Adjust as needed for larger text */
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    }
+
+    .rounded {
+        border-radius: 0.5rem;
+    }
+</style>
+<div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+        <div class="content-wrapper">
+
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div
+                        class="d-flex justify-content-center align-items-center p-5 bg-dark text-white rounded shadow-sm">
+                        <div class="text-center">
+                            <h1 class="font-weight-bold mb-0">Prosper India Admin Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <?php if ($_SESSION['is_superadmin'] == 1) { ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="card bg-primary text-white">
+                                <a href="<?= BASE_URL ?>dashboard/roles.php" class="text-white">
+                                    <div class="card-body">
+                                        <p class="card-title text-center">Roles</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h3 class="mb-0" id="rcount"><?= $total_roles; ?></h3>
+                                            <i class="ti-calendar icon-md"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card bg-success text-white">
+                                <a href="<?= BASE_URL ?>dashboard/permissions.php" class="text-white">
+                                    <div class="card-body">
+                                        <p class="card-title text-center">Permissions</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h3 class="mb-0" id="pcount"><?= $total_permissions; ?></h3>
+                                            <i class="ti-lock icon-md"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    <?php } ?>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-info text-white">
+                            <a href="<?= BASE_URL ?>dashboard/users.php" class="text-white">
+                                <div class="card-body">
+                                    <p class="card-title text-center">Users</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h3 class="mb-0" id="ucount"><?= $total_users; ?></h3>
+                                        <i class="ti-user icon-md"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-warning text-white">
+                            <a href="<?= BASE_URL ?>dashboard/contacts.php" class="text-white">
+                                <div class="card-body">
+                                    <p class="card-title text-center">Contacts</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h3 class="mb-0" id="ccount"><?= $total_contacts; ?></h3>
+                                        <i class="ti-user icon-md"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-danger text-white">
+                            <a href="<?= BASE_URL ?>dashboard/logs.php" class="text-white">
+                                <div class="card-body">
+                                    <p class="card-title text-center">Login Logs</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h3 class="mb-0" id="lcount"><?= $total_logs; ?></h3>
+                                        <i class="ti-user icon-md"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center">
+                <div> © 2024 Prosper India Foundation. All rights reserved. </div>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+</div>
+<?php
+
+require_once ('../includes/footer.php');
+
+?>

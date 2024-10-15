@@ -1,0 +1,13 @@
+-- Harikesh kumar - 22-05-2024
+
+CREATE TABLE `contact_us` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `phone` text NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `message` longtext NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` int(2) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+);

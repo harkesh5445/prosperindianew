@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosper India Foundation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+    <header id="myHeader">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <!-- <a class="navbar-brand" href="#">Prosper India Foundation</a> -->
+                <a class="navbar-brand" href="#"><img src="images/pip.png" class="cuslogo" alt=""></a> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#economy">Economy</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#Education">Education</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#power">Military</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#about">About</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-outline-dark btn-round m-lg-1" id="myBtn" href="login.html">Login</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+                    <div class="login100-pic js-tilt" data-tilt>
+                        <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png" alt="IMG">
+                    </div>
+    
+                    <form class="login100-form validate-form" >
+                        <span class="login100-form-title">
+                            Sing Up Here
+                        </span>
+    
+                        <div class="wrap-input100 validate-input" data-validate = "Valid name is required: ex@abc.xyz">
+                            <input class="input100" type="text" name="name" placeholder="Full Name">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                            <input class="input100" type="email" name="email" placeholder="Email">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate = "Valid mobile number is required: ex@abc.xyz">
+                            <input class="input100" type="text" name="phone" placeholder="Mobile number">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                            </span>
+                        </div>
+    
+                        <div class="wrap-input100 validate-input" data-validate = "Password is required">
+                            <input class="input100" type="password" name="pass" placeholder="Password">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                        </div>
+    
+                        <div class="container-login100-form-btn">
+                            <button class="login100-form-btn">
+                                Sign up
+                            </button>
+                        </div>
+    
+                        
+    
+                        <div class="text-center p-t-50">
+                            <a class="txt2" href="login.html">
+                                Have account? Sign in
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-body-tertiary text-center">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2024 Prosper India Foundation. All rights reserved.
+          <!-- <a class="text-body" href="https://prosperindia.org/">prosperindia.org</a> -->
+        </div>
+        <!-- Copyright -->
+      </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<div id="response"></div>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Prosper India</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.min.css">
+    <link rel="stylesheet" href="../css/style1.css">
+
+    <style>
+        .alert1 {
+            position: fixed;
+            top: 50%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .success1 {
+            color: green;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .failed1 {
+            color: red;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .show {
+            opacity: 1;
+        }
+
+        .navbar .navbar-menu-wrapper {
+            background: #2c4197 !important;
+        }
+
+        .navbar .navbar-brand-wrapper {
+            background: #2c4197 !important;
+        }
+
+        .navbar .navbar-brand-wrapper .navbar-brand img {
+            width: calc(290px - 130px) !important;
+            max-width: 100%;
+            height: 50px !important;
+            margin: auto;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-scroller">
+
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo me-5" href="../index.html"><img src="../images/pip.png" class="me-2"
+                        alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="../index.html"><img src="../images/pip.png"
+                        alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="ti-view-list"></span>
+                </button>
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="ti-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                                aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown me-1">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
+                            id="messageDropdown" href="#" data-bs-toggle="dropdown">
+                            <i class="ti-email mx-0"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="messageDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <img src="../images/profile.png" alt="image" class="profile-pic">
+                                </div>
+                                <div class="item-content flex-grow">
+                                    <h6 class="ellipsis font-weight-normal">David Grey
+                                    </h6>
+                                    <p class="font-weight-light small-text text-muted mb-0">
+                                        The meeting is cancelled
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <img src="../images/profile.png" alt="image" class="profile-pic">
+                                </div>
+                                <div class="item-content flex-grow">
+                                    <h6 class="ellipsis font-weight-normal">Tim Cook
+                                    </h6>
+                                    <p class="font-weight-light small-text text-muted mb-0">
+                                        New product launch
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <img src="../images/profile.png" alt="image" class="profile-pic">
+                                </div>
+                                <div class="item-content flex-grow">
+                                    <h6 class="ellipsis font-weight-normal"> Johnson
+                                    </h6>
+                                    <p class="font-weight-light small-text text-muted mb-0">
+                                        Upcoming board meeting
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-bs-toggle="dropdown">
+                            <i class="ti-bell mx-0"></i>
+                            <span class="count"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <div class="item-icon bg-success">
+                                        <i class="ti-info-alt mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="item-content">
+                                    <h6 class="font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <div class="item-icon bg-warning">
+                                        <i class="ti-settings mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="item-content">
+                                    <h6 class="font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <div class="item-icon bg-info">
+                                        <i class="ti-user mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="item-content">
+                                    <h6 class="font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                            <img src="../images/profile.png" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" id="logout">
+                                <i class="ti-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="ti-view-list"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="ti-shield menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">
+                            <i class="ti-user menu-icon"></i>
+                            <span class="menu-title">Users</span>
+
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="roles.html">
+                            <i class="ti-user menu-icon"></i>
+                            <span class="menu-title">Roles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="permissions.html">
+                            <i class="ti-lock menu-icon"></i>
+                            <span class="menu-title">Permissions</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacts.html">
+                            <i class="ti-id-badge menu-icon"></i>
+                            <span class="menu-title">Contacts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logs.html">
+                            <i class="ti-more menu-icon"></i>
+                            <span class="menu-title">Login Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h4 class="font-weight-bold mb-0">Prosper India User Logs</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- content-wrapper ends -->
+
+                    <!------Roles------->
+                    <div class="col-lg-12 grid-margin stretch-card mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Contacts</h4>
+
+                                <div class="table-responsive">
+                                    <div class="filter-container">
+                                        <input type="text" id="filterInput" placeholder="Search...">
+                                    </div>
+                                    <table class="table table-striped" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Id
+                                                </th>
+                                                <th>
+                                                    Name 
+                                                </th>
+                                                <th>
+                                                   Email
+                                                </th>
+                                                <th>
+                                                    Phone
+                                                </th>
+                                                <th>
+                                                    Created At
+                                                </th>
+                                                <th>
+                                                Updated At
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination">
+                                        <!-- Pagination buttons will be appended here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center">
+                        <div> © 2024 Prosper India Foundation. All rights reserved. </div>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!--js -->
+
+
+    <script src="../js/vendor.bundle.base.js"></script>
+    <script src="../js/off-canvas.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <script src="../js/contacts.js"></script>
+    <script src="../js/script.js"></script>
+    
+</body>
+
+</html>

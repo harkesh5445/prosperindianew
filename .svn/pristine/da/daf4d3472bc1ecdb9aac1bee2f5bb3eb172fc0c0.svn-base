@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<div id="response"></div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosper India Foundation</title>
+    <!-- Bootstrap CSS -->
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <script src="js/authCheck.js"></script>
+    <style>
+        body {
+            margin-top: 20px !important;
+        }
+
+        .custom-form .form-control {
+            height: 44px;
+            font-size: 15px;
+            padding-left: 15px;
+            border-color: #e6eef6;
+            color: #828f99;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        .custom-form .contact-lable {
+            position: absolute;
+            left: 27px;
+            top: 7px;
+            line-height: 20px;
+            font-weight: 500;
+            color: #828f99;
+            background: #fbfdfe;
+            margin: 0px;
+            padding: 0px 7px;
+            /* z-index: 1; */
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: .5rem;
+        }
+
+        .custom-form .form-control {
+            height: 44px;
+            font-size: 15px;
+            padding-left: 15px;
+            border-color: #95fdff;
+            color: #828f99;
+        }
+
+        textarea.form-control {
+            height: auto !important;
+        }
+
+        .home-img .animation-2 {
+            border-radius: 50%;
+            background-color: #2f3c71;
+            -webkit-box-shadow: 0px 20px 30px 0px rgb(48 61 114 / 40%);
+            box-shadow: 0px 20px 30px 0px rgb(48 61 114 / 40%);
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            top: -60px;
+            right: 60px;
+            -webkit-animation: spin 2s infinite alternate;
+            animation: spin 2s infinite alternate;
+        }
+
+        .home-img .animation-3 {
+            border-radius: 50%;
+            background-color: #f5828b;
+            -webkit-box-shadow: 0px 20px 30px 0px rgb(245 130 139 / 40%);
+            box-shadow: 0px 20px 30px 0px rgb(245 130 139 / 40%);
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            bottom: 50px;
+            left: -45px;
+            -webkit-animation: spin 3s infinite alternate;
+            animation: spin 3s infinite alternate;
+        }
+
+        /*** Spin 2 ***/
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+
+            100% {
+                -webkit-transform: translateY(40px);
+                transform: translateY(40px);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+
+            100% {
+                -webkit-transform: translateY(40px);
+                transform: translateY(40px);
+            }
+        }
+
+        #phone::placeholder {
+            color: transparent;
+            /* Or opacity: 0; */
+        }
+
+        .iti {
+            width: 100%;
+        }
+
+        @media screen and (max-width: 992px) {
+            .pt5 {
+                padding-top: 7rem !important;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
+
+<body>
+    <header id="myHeader">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 moblogo">
+                        <a class="navbar-brand" href="#"><img src="images/pip.png" class="cuslogo" alt=""></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#economy">Economy</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#Education">Education</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#power">Military</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#about">About</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-outline-dark btn-round m-lg-1" id="myBtn" href="login.html">Login</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="section" id="contact">
+            <div class="col-lg-12 col-md-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="title-box text-center">
+                            <!-- <h3 class="title-heading mt-4">Let's talk about everything!</h3> -->
+
+                            <h3 class="title-heading mt-5 pt-5 pt5">Contact Us</h3>
+                            <!-- <p class="text-muted f-17 mt-3">Vivamus ac nulla ultrices laoreet neque mollis mi morbi
+                                elementum mauris
+                                sit amet arcu <br> fringilla auctor In eleifend maximus nisi sed vulputate.</p> -->
+
+                            <img src="images/home-border.png" height="15" class="mt-3" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5 pt-4">
+                    <div class="col-lg-6">
+                        <div class="mt-4 home-img text-center">
+                            <div class="animation-2"></div>
+                            <div class="animation-3"></div>
+                            <img src="https://themesdesign.in/thamza/layouts/images/features/img-3.png"
+                                class="img-fluid" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="custom-form mt-4">
+                            <!-- <div id="message"></div> -->
+                            <form id="contact-form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label class="contact-lable">First Name<span id="sname" style="color:red;">
+                                                    *</span></label>
+                                            <input name="name" id="name" class="form-control" type="text" required
+                                                onfocus="test('name')">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label class="contact-lable">Last Name<span id="slastname"
+                                                    style="color:red;"> *</span></label>
+                                            <input name="lastname" id="lastname" class="form-control" type="text"
+                                                required onfocus="test('lastname')">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="country_code" name="country_code">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label class="contact-lable">Email Address<span id="semail"
+                                                    style="color:red;"> </span></label>
+                                            <input name="email" id="email" class="form-control" type="email">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label class="contact-lable" style="top:-7px;left:12px;">Contact no<span
+                                                    id="sphone" style="color:red;">
+                                                    *</span></label>
+                                            <input name="phone" id="phone" class="form-control" type="tel" required
+                                                onfocus="test('phone')" maxlength="10">
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label class="contact-lable">Subject<span id="ssubject" style="color:red;">
+                                                    *</span></label>
+                                            <input name="subject" id="subject" class="form-control" type="text"
+                                                required onfocus="test('subject')">
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group mt-3">
+                                            <label class="contact-lable">Your Message<span id="smessage"
+                                                    style="color:red;"> *</span></label>
+                                            <textarea name="message" id="message" rows="5" class="form-control" required
+                                                onfocus="test('message')"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 mt-3 text-right">
+                                        <input id="send" name="send" class="submitBnt btn btn-primary btn-round"
+                                            value="Send Message" type="button">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    <footer class="bg-body-tertiary text-center">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2024 Prosper India Foundation. All rights reserved.
+            <!-- <a class="text-body" href="https://prosperindia.org/">prosperindia.org</a> -->
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Bootstrap JS and dependencies -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+
+
+</body>
+
+<script>
+    var input = document.querySelector("#phone");
+
+    var iti = window.intlTelInput(input, {
+        separateDialCode: true,
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+        placeholder: ''
+    });
+    iti.setCountry('in');
+    $('#country_code').val('+' + iti.getSelectedCountryData().dialCode);
+
+    input.addEventListener("countrychange", function () {
+        $('#country_code').val('+' + iti.getSelectedCountryData().dialCode);
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,85 @@
+<?php
+require_once 'config.php';
+class ConnectionPool
+{
+    private $pool = [];
+    private $maxConnections;
+    private $dsn;
+    private $username;
+    private $password;
+    private $options;
+
+    public function __construct($dsn, $username, $password, $options = [], $maxConnections = 10)
+    {
+        $this->dsn = $dsn;
+        $this->username = $username;
+        $this->password = $password;
+        $this->options = $options;
+        $this->maxConnections = $maxConnections;
+    }
+
+    public function getConnection()
+    {
+
+        if (!empty($this->pool)) {
+            return array_pop($this->pool);
+        }
+
+        if (count($this->pool) < $this->maxConnections) {
+            return new PDO($this->dsn, $this->username, $this->password, $this->options);
+        }
+
+        throw new Exception("Maximum number of connections reached.");
+    }
+
+    public function releaseConnection($connection)
+    {
+        if (count($this->pool) < $this->maxConnections) {
+            $this->pool[] = $connection;
+        }
+    }
+
+    public function getPoolSize()
+    {
+        return count($this->pool);
+    }
+
+    public function execute($con, $sql, $params = [])
+    {
+        try {
+            $stmt = $con->prepare($sql);
+            $stmt->execute($params);
+            $this->releaseConnection($con);
+            return $stmt;
+        } catch (PDOException $e) {
+            exit('Query execution failed: ' . $e->getMessage());
+        }
+    }
+
+    public function create($con, $table, $data)
+    {
+        $columns = implode(',', array_keys($data));
+        $values = implode(',', array_fill(0, count($data), '?'));
+        $sql = "INSERT INTO $table ($columns) VALUES ($values)";
+        return $this->execute($con, $sql, array_values($data));
+    }
+
+}
+
+
+$dsn = 'mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8mb4';
+$username = DB_USER;
+$password = DB_PASSWORD;
+$options = [
+    PDO::ATTR_PERSISTENT => true,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+];
+
+$db = new ConnectionPool($dsn, $username, $password, $options);
+$con = $db->getConnection();
+
+
+
+
+

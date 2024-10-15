@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosper India Foundation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <header id="myHeader">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <!-- <a class="navbar-brand" href="#">Prosper India Foundation</a> -->
+                <a class="navbar-brand" href="#"><img src="images/pip.png" class="cuslogo" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item scrl">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+
+                        <li class="nav-item scrl">
+                            <a class="nav-link" onclick="appendStyle('economy')" href="#economy">Economy</a>
+                        </li>
+
+                        <li class="nav-item scrl">
+                            <a class="nav-link" onclick="appendStyle('Education')" href="#Education">Education</a>
+                        </li>
+
+                        <li class="nav-item scrl">
+                            <a class="nav-link" onclick="appendStyle('power')" href="#power">Military</a>
+                        </li>
+                        <li class="nav-item scrl">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-outline-dark btn-round m-lg-1" id="myBtn" href="login.html">Login</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container spncontainer">
+        <section id="home">
+            <div class="row">
+                <div class="col-lg-7">
+                    <p>With 1.4 billion strong human power, India is the largest democracy in the world.</p>
+
+
+                    <p>How do you feed 1.4 billion people? How many schools do you need to educate them? How do
+                        you make them prosper? How do you employ a million aspiring engineers and a million
+                        aspiring doctors a year; and do it year after year? How do you scale cities with more
+                        than 20 million people? Most importantly, how do you unite 1.4 billion people?</p>
+
+                    <p>Demonstrating unity in diversity, India has 22 constitutionally recognized regional
+                        languages. With hundreds of dialects, diverse religious groups, and thousands of small
+                        ethnic groups and castes, India provides the right to protest peacefully and freedom of
+                        speech and expression to its citizens. Welcome to the Republic of India.</p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="image-container ">
+                        <img src="images/democracy2.jpg" alt="About Image">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="economy">
+            <div class="row">
+                <div class="col-lg-7 order-lg-2">
+                    <h2>Economy</h2>
+                    <ul>
+                        <li>
+                            <p>India is the 5th largest economy in the world, with a GDP of USD 4 trillion.</p>
+                        </li>
+                        <li>
+                            <p>The fastest-growing major economy. India has around $600 billion of reserves in foreign
+                                currency and is the 8th
+                                largest in the world in gold reserves.</p>
+                        </li>
+                        <li>
+                            <p>Sustainable in agriculture. Self sufficient in feeding its large and growing population.
+                                Largest producer of milk in the world - 230.58 million tonnes during 2022-23.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 order-lg-1">
+                    <div class="image-container">
+                        <img src="images/economy.png" alt="Economy Image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="Education">
+            <div class="row">
+                <div class="col-lg-7 order-lg-1">
+                    <h2>Education</h2>
+                    <h5>In 2024</h5>
+                    <ul>
+                        <li>
+                            <p>1.4 million students appeared for JEE (Entrance exam for Engineering)
+                            </p>
+                        </li>
+                        <li>
+                            <p> 2.4 million students appeared for NEET (Entrance exam for Medical Studies)
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                1.3 million students appeared in UPSC (for Indian Adimistration Services) </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 order-lg-1">
+                    <div class="image-container">
+                        <img src="images/2.png.jpg" alt="Human Capital Image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="power">
+            <div class="row">
+                <div class="col-lg-7 order-lg-2">
+                    <h2>Military</h2>
+                    <ul>
+                        <li>
+                            <p>Ranked 4th in the Global Firepower Index <a href="https://www.globalfirepower.com/"
+                                    target="_blank">(https://www.globalfirepower.com/)</a>.</p>
+                        </li>
+                        <li>
+                            <p>4th in the world in defense budget. $74 billion in 2024.</p>
+                        </li>
+                        <li>
+                            <p>2nd largest Army with 1.4 million active military service personnel; 4th most powerful
+                                Air Force by aircraft fleet strength; 5th largest Navy with 2 aircraft carriers. </p>
+                        </li>
+                        <li>
+                            <p>Nuclear Power with Nuclear Triad. A Space Power.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 order-lg-1">
+                    <div class="image-container">
+                        <img src="images/power.jpeg" alt="Power Image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="row">
+                <div class="col-lg-7">
+                    <h2>About</h2>
+                    <p>We are Prosper India Foundation - a not for profit Non-Governmental Organization.
+                        We are on a mission to solve India's gigantic problems.</p>
+
+
+                    <p>How do you feed 1.4 billion people? How many schools do you need to educate them? How do
+                        you make them prosper? How do you employ a million aspiring engineers and a million
+                        aspiring doctors a year; and do it year after year? How do you scale cities with more
+                        than 20 million people? Most importantly, how do you unite 1.4 billion people?</p>
+
+                </div>
+                <div class="col-lg-5 order-lg-2">
+                    <div class="image-container">
+                        <img src="images/abtus2.jpg" alt="Power Image" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-body-tertiary text-center">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);"> © 2024 Prosper India Foundation.
+            All rights reserved. </div>
+        <!-- Copyright -->
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                var hashValue = window.location.hash;
+                if (hashValue !== "") {
+                    var id = hashValue.substring(1);
+                    var targetElement = document.getElementById(id);
+                    if (targetElement) {
+                        targetElement.style.marginTop = '110px';
+                        targetElement.style.paddingTop = '110px';
+                    } else {
+                        console.log("Target element with ID '" + id + "' not found.");
+                    }
+                } else {
+                    console.log("No hash value present in the URL.");
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        });
+    </script>
+
+    <script>
+
+        function appendStyle(id) {
+            var refId = localStorage.getItem('refId');
+
+            if (refId !== null && refId !== '') {
+                $('#' + refId).css('margin-top', '0px');
+                $('#' + refId).css('padding-top', '0px');
+                localStorage.removeItem(refId);
+            }
+            if (refId !== 'about') {
+                $('#' + id).css('margin-top', '110px');
+                $('#' + id).css('padding-top', '110px');
+                localStorage.setItem('refId', id);
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- <script>
+        $.ajax({
+            type: 'POST',
+            url: 'auth.php',
+            data: { action: 'checkAuth' },
+            success: function (response) {
+                var res1 = JSON.parse(response);
+                if (res1.status == false) {
+                    var url1 = res1.base_url + 'login.html';
+                    window.location.href = url1;
+                } else {
+                    var res1 = JSON.parse(response);
+                    var url1 = res1.base_url + 'admin/index.html';
+                    window.location.href = url1;
+                }
+            }
+        });
+
+    </script> -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

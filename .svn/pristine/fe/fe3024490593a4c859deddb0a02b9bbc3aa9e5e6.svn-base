@@ -1,0 +1,41 @@
+<?php
+ob_start();
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$currentHostname = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'unknown';
+
+$ip = $_SERVER['REMOTE_ADDR'];
+if (($currentHostname == 'localhost') && ($ip == '::1')) {
+    define('BASE_URL', 'http://localhost/pif/');
+    define('SITE_NAME', 'Prosper India');
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'education');
+    define('DB_USER', 'root');
+    define('DB_PASSWORD', '');
+
+} elseif (($currentHostname == 'prosperindia.org') || ($currentHostname == 'www.prosperindia.org')) {
+    define('BASE_URL', 'https://prosperindia.org/');
+    define('SITE_NAME', 'Prosper India');
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'pif');
+    define('DB_USER', 'pif_user');
+    define('DB_PASSWORD', 'pif!$W6wi2');
+}
+
+//database tables
+define('CONTACT_US', 'Contact_Us');
+define('LOGIN_LOGS', 'Login_Logs');
+define('USERS', 'Users');
+define('ROLES', 'Roles');
+define('PERMISSIONS', 'Permissions');
+define('USER_PERMISSIONS', 'User_Permissions');
+
+ $curren_link = $_SERVER['SCRIPT_NAME'];
+
+
+
+
+
+

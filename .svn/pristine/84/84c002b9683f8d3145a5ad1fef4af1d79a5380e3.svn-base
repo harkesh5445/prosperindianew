@@ -1,0 +1,423 @@
+</div>
+<script src="<?= BASE_URL ?>js/vendor.bundle.base.js?v=<?= rand(); ?>"></script>
+<script src="<?= BASE_URL ?>js/off-canvas.js?v=<?= rand(); ?>"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="<?= BASE_URL ?>js/script.js?v=<?= rand(); ?>"></script>
+
+<!---- users---->
+<?php if (!empty($curren_link) && strpos($curren_link, 'users.php')) { ?>
+    <script src="<?= BASE_URL ?>js/users.js?v=<?= rand(); ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select2").select2({
+                placeholder: "select data-structures",
+                tags: true,
+            });
+        })
+    </script>
+<?php } ?>
+
+<!---- roles---->
+<?php if (!empty($curren_link) && strpos($curren_link, 'roles.php')) { ?>
+    <script src="<?= BASE_URL ?>js/roles.js?v=<?= rand(); ?>"></script>
+<?php } ?>
+
+<!---- permissions---->
+<?php if (!empty($curren_link) && strpos($curren_link, 'permissions.php')) { ?>
+    <script src="<?= BASE_URL ?>js/permissions.js?v=<?= rand(); ?>"></script>
+<?php } ?>
+
+<!---- logs---->
+<?php if (!empty($curren_link) && strpos($curren_link, 'logs.php')) { ?>
+    <script src="<?= BASE_URL ?>js/logs.js?v=<?= rand(); ?>"></script>
+<?php } ?>
+
+
+
+</body>
+
+</html>
+
+
+<?php if (!empty($curren_link) && strpos($curren_link, 'users.php')) { ?>
+    <!-- <Edit Users Modal> -->
+    <div class="modal fade" id="editUserModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="response1"></div>
+                    <form id="update-user">
+                        <div class="row">
+                            <!-- Form Section -->
+                            <div class="col-lg-7 col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Enter email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" name="phone" id="phone"
+                                        placeholder="Enter phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select class="select2 form-control" multiple name="roles[]" id="role">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="permissions">Permissions</label>
+                                    <select class="select2 form-control" name="permissions[]" multiple id="permissions">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Profile Card Section -->
+                            <div class="col-lg-5 col-md-6 mt-4">
+                                <div class="card profile-card">
+                                    <img src="../images/profile.png" class="card-img-top mx-auto" alt="Profile Image">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="uName">User Name</h5>
+                                        <p class="card-text" id="uEmail">Email: user@example.com</p>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" name="is_verified"
+                                                id="emailVerified">
+                                            <!-- <input  type="hidden" name="verified"
+                                                id="is_verified1"> -->
+                                            <label class="form-check-label" for="emailVerified">Verified</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" name="isDeleted" type="checkbox"
+                                                id="deleteUser">
+                                            <!-- <input name="Deleted" type="hidden"
+                                                id="deleteUser1"> -->
+                                            <label class="form-check-label" for="deleteUser">Deleted</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="action" value="updateUser">
+                        <input type="hidden" name="id" value="" id="userId">
+                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <Add Users Modal> -->
+
+    <div class="modal fade" id="addUser" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message"></div>
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card-body">
+                            <form class="forms-sample" id="add-user-form">
+                                <input type="hidden" name="action" value="addUser">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputName1">Name</label>
+                                            <input type="text" name="name" class="form-control" id="exampleInputName1"
+                                                placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail3">Email address</label>
+                                            <input type="email" name="email" class="form-control" id="exampleInputEmail3"
+                                                placeholder="Email">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword4">Password</label>
+                                            <input type="password" name="password" class="form-control" id="pass"
+                                                placeholder="Password">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword4">Confirm Password</label>
+                                            <input type="password" name="password" class="form-control" id="cpass"
+                                                placeholder="Password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <label for="uphone">Contact no</label>
+                                        <input type="text" name="phone" maxlength="10" class="form-control" id="uphone"
+                                            placeholder="Contact no">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="userRole"> Roles </label>
+                                            <select class="select2 form-control" name="roles[]" id="userRole" multiple>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="userPermission">Permissions</label>
+                                            <select class="select2 form-control" name="permissions[]" id="userPermission"
+                                                multiple>
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <button type="button" class="btn btn-primary me-2 float-end"
+                                    onclick="addUser(event)">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showdeletedusers" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Deleted Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-striped" id="dataTable1">
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Contact No
+                                </th>
+
+                                <th>
+                                    Verification
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php } ?>
+
+<!-- roles -->
+
+<?php if (!empty($curren_link) && strpos($curren_link, 'roles.php')) { ?>
+
+    <div class="modal fade" id="addRole" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Add Role</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message"></div>
+                    <div class="col-12 grid-margin stretch-card">
+
+                        <div class="card-body">
+
+                            <form class="forms-sample" id="add-role-form">
+                                <input type="hidden" name="action" value="addRole">
+
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <input type="text" name="role" class="form-control" id="role" placeholder="Enter role">
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary me-2 float-end"
+                                    onclick="//addRole(event)">Submit</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editRole" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Add Role</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message1"></div>
+                    <div class="col-12 grid-margin stretch-card">
+
+                        <div class="card-body">
+
+                            <form class="forms-sample" id="edit-role-form">
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <input type="text" name="role" class="form-control" id="role1" placeholder="Enter role">
+                                    <input type="hidden" name="id" class="form-control" id="role_id"
+                                        placeholder="Enter role">
+                                    <input type="hidden" name="action" value="editRole" class="form-control" id="role_id"
+                                        placeholder="Enter role">
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary me-2 float-end"
+                                    onclick="//editRole(event)">Submit</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<?php } ?>
+<!-- permissions -->
+<?php if (!empty($curren_link) && strpos($curren_link, 'permissions.php')) { ?>
+    <div class="modal fade" id="addPermission" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Add Permission</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message"></div>
+                    <div class="col-12 grid-margin stretch-card">
+
+                        <div class="card-body">
+
+                            <form class="forms-sample" id="add-permission-form">
+                                <input type="hidden" name="action" value="addPermission">
+
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" name="role_id" id="role">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="permission">Permission</label>
+                                    <input type="text" name="permissions" class="form-control" id="permission"
+                                        placeholder="Enter permission">
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary me-2 float-end">Submit</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editPermission" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Edit Permission</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message1"></div>
+                    <div class="col-12 grid-margin stretch-card">
+
+                        <div class="card-body">
+
+                            <form class="forms-sample" id="edit-permission-form">
+
+                                <input type="hidden" name="action" value="editPermission">
+                                <input type="hidden" name="prmsn_id" id="prmsn_id" value="">
+
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" name="role_id" id="role1">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="permission">Permission</label>
+                                    <input type="text" name="permissions" class="form-control" id="permission1"
+                                        placeholder="Enter permission">
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary me-2 float-end">Submit</button>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<?php }
+ob_end_flush(); 
+?>

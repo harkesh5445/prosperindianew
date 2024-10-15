@@ -1,0 +1,232 @@
+$(document).ready(function () {
+    
+  $('#send').click(function (event) {
+
+        event.preventDefault();
+        var isValid = true;
+        $('#contact-form input, #contact-form textarea').each(function () {
+
+            var fieldName = $(this).attr('name');
+            if (fieldName === 'email') {
+                return true;
+            }
+
+            if ($(this).val().trim() === '') {
+                isValid = false;
+                $('#' + fieldName).css('border', '1px solid red');
+            } else {
+                $('#' + fieldName).css('border', '1px solid #95fdff');
+            }
+        });
+
+        if (isValid) {
+
+            var formData = $('#contact-form').serialize();
+            $.ajax({
+                type: 'POST',
+                url: 'contact.php',
+                data: formData,
+                cache: false,
+                success: function (response) {
+                    console.log(response);
+                    var data = JSON.parse(response);
+                    if (data.status === true) {
+                        $('#response').html(` <div class="alert1 success1">${data.message}</div>`);
+                        showAlert('.success1', 5000);
+                        $("#contact-form")[0].reset();
+                    } else {
+                        $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                        showAlert('.failed1', 5000);
+                    }
+                },
+                error: function () {
+                    $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                    showAlert('.failed1', 5000);
+                }
+            });
+        }
+    });
+
+
+    $('#loginbtn').click(function (event) {
+        event.preventDefault();
+        var isValid = true;
+        $('#login-form input').each(function () {
+            var fieldName = $(this).attr('name');
+
+            if ($(this).val().trim() === '') {
+                isValid = false;
+                $('#' + fieldName).css('border', '1px solid red');
+            } else {
+                $('#' + fieldName).css('border', '1px solid #95fdff');
+            }
+        });
+
+        if (isValid) {
+
+            var formData = $('#login-form').serialize();
+            $.ajax({
+                type: 'POST',
+                url: 'auth.php',
+                data: formData,
+                cache: false,
+                success: function (response) {
+                    console.log(response);
+                    var data = JSON.parse(response);
+                    if (data.status === true) {
+                        var permissionArr = data.data.permissions;
+                        console.log(permissionArr);
+                        if (permissionArr) {
+                            sessionStorage.clear();
+                            $('#response').html(` <div class="alert1 success1">${data.message}</div>`);
+                            showAlert('.success1', 5000);
+                            if ((data.data !== undefined) && (permissionArr.includes('admin'))) {
+                                redirect = data.base_url + 'admin/index.html';
+                                window.location.replace(redirect);
+                            }
+
+                            if ((data.data !== undefined) && (permissionArr.includes('topo'))) {
+                                redirect = data.base_url + 'admin/index.html';
+                                window.location.replace(redirect);
+                            }
+
+                            if ((data.data !== undefined) && (permissionArr.includes('user'))) {
+                                redirect = data.base_url + 'admin/index.html';
+                                window.location.replace(redirect);
+                            }
+
+                            if ((data.data !== undefined) && (permissionArr.includes('all'))) {
+                                redirect = data.base_url + 'admin/index.html';
+                                window.location.replace(redirect);
+                            }
+                        } else {
+                            $('#response').html(` <div class="alert1 failed1">You don't have permission to login!</div>`);
+                            showAlert('.failed1', 5000);
+                        }
+                    } else {
+                        $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                        showAlert('.failed1', 5000);
+                    }
+                },
+                error: function () {
+                    $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                    showAlert('.failed1', 5000);
+                }
+            });
+        }
+    });
+    
+    $('#signup-form').submit(function (event) {
+        event.preventDefault();
+        var isValid = true;
+        $('#signup-form input').each(function () {
+            var fieldName = $(this).attr('name');
+            if ($(this).val().trim() === '') {
+                isValid = false;
+                $('#' + fieldName).css('border', '1px solid red');
+            } else {
+                $('#' + fieldName).css('border', '1px solid #95fdff');
+            }
+        });
+
+        if (isValid) {
+            var len = $('#password').val().length;
+           if (len >= 8) {
+                if ($('#password').val() === $('#c_password').val()) {
+                    var formData = $('#signup-form').serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'auth.php',
+                        data: formData,
+                        cache: false,
+                        success: function (response) {
+                            console.log(response);
+                            var data = JSON.parse(response);
+                            if (data.status === true) {
+                                $('#signupMessage').html(data.message);
+                                $('#staticBackdrop').modal('show');
+                                $("#signup-form")[0].reset();
+                            } else {
+                                $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                                showAlert('.failed1', 5000);
+                            }
+                        },
+                        error: function () {
+                            $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                            showAlert('.failed1', 5000);
+                        }
+                    });
+
+                } else {
+
+                    $('.errmsg').html('Password does not match. ');
+                }
+
+            } else {
+                $('.errmsg').html('Password should be 8 character long. ');
+            }
+        }
+    });
+
+   
+    $('#logout').click(function (event) {
+     
+        event.preventDefault();
+        var action = 'logOut';
+        $.ajax({
+            type: 'POST',
+            url: '../auth.php',
+            data: { action: action },
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                var data = JSON.parse(response);
+                if (data.status === true) {
+                    $('#response').html(` <div class="alert1 success1">${data.message}</div>`);
+                    redirect = data.base_url;
+                    window.location.replace(redirect);
+                } else {
+                    $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                    showAlert('.failed1', 5000);
+                }
+            },
+            error: function () {
+                $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                showAlert('.failed1', 5000);
+            }
+        });
+
+    });
+
+    function showAlert(selector, duration) {
+        $(selector)
+            .addClass('show')
+            .delay(duration)
+            .queue(function () {
+                $(this).removeClass('show').dequeue();
+            });
+    }
+});
+
+function test(id) {
+    $('#' + id).css('border', '1px solid #95fdff');
+    if (id === 'c_password') {
+        $('.errmsg').html('');
+    }
+}
+
+function check(cpass, pass) {
+
+    var password = $('#' + pass).val();
+    var confirm_password = $('#' + cpass).val();
+    if ((password !== confirm_password) && (confirm_password !== '')) {
+        $('.errmsg').html('* Password does not match. ');
+    } else {
+        $('.errmsg').html('');
+    }
+
+}
+
+
+
+

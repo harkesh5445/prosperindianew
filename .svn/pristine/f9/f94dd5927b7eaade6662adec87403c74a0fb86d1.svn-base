@@ -1,0 +1,107 @@
+<?php
+
+require_once ('../includes/header.php');
+
+?>
+
+<div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+
+        <div class="content-wrapper">
+
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="font-weight-bold mb-0">Prosper India User Settings</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!----- users ------->
+            <div class="col-lg-12 grid-margin stretch-card mt-5">
+                <div class="card">
+                    <h2 class="card-title text-center p-5">User Profile</h2>
+                    <div class="card-body d-flex">
+                        <div class="container">
+                            <div class="card profile-card p-5">
+                                <img src="../images/profile.png" class="card-img-top mx-auto "
+                                    style="height: 100px; width: 100px; border-radius: 50%;" alt="Profile Image">
+
+                                <div class="card-body ">
+                                    <h2 class="card-title text-center" id="uName">
+                                        <?= isset($_SESSION['userData']['name']) ? $_SESSION['userData']['name'] : 'User' ?>
+                                    </h2>
+                                    <h4 class="card-text text-center" id="uEmail">Email:
+                                        <?= isset($_SESSION['userData']['email']) ? $_SESSION['userData']['email'] : 'User' ?>
+                                    </h4>
+
+                                    <h3>Permissions</h3>
+                                    <ul>
+                                        <?php foreach ($permissions as $val) { ?>
+                                        <li>
+                                            <?= $val ?>
+                                        </li>
+
+                                        <?php } ?>
+                                    </ul>
+
+
+                                </div>
+                            </div>
+
+                            <h3 class="text-center m-5">Update Password</h3>
+                            <div class="card">
+                                <div class="card-body">
+                                    <form class="forms-sample" id="update-pass-form">
+                                        <input type="hidden" name="action"  value="updatePass">
+
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword4">Old Password</label>
+                                            <input type="password" name="oldpassword" onfocus="test('pass')" class="form-control" id="pass"
+                                                placeholder="Enter Old Password">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword4">New Password</label>
+                                            <input type="text" name="newpassword" onfocus="test('npass')" class="form-control" id="npass"
+                                                placeholder="Enter New Password">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword4">Confirm new Password</label>
+                                            <input type="text" name="cpassword"  onfocus="test('cpass')" class="form-control" id="cpass"
+                                                placeholder="Enter Confirm Password">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2 float-end">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<footer class="footer">
+    <div class="d-sm-flex justify-content-center">
+        <div> © 2024 Prosper India Foundation. All rights reserved. </div>
+    </div>
+</footer>
+<!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+
+<?php
+
+require_once ('../includes/footer.php');
+
+?>

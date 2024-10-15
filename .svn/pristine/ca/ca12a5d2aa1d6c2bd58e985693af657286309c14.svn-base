@@ -1,0 +1,32 @@
+-- Harikesh kumar - 22-05-2024
+
+CREATE TABLE `contact_us` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `phone` text NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `message` longtext NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+);
+
+-- Harikesh kumar - 11-06-2024
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `isAdmin` int(2) NOT NULL DEFAULT 0,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `roles` varchar(255) DEFAULT NULL,
+  `permissions` varchar(255) DEFAULT NULL,
+  `status` int(2) NOT NULL DEFAULT 1,
+  `isDeleted` int(2) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+);

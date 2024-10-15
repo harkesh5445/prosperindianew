@@ -1,0 +1,207 @@
+<?php
+
+require_once 'db.php';
+
+$response = array();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (($_POST['action'] === 'userLogin')) {
+
+        $response = Login($_POST);
+        echo json_encode($response);
+        die();
+
+    }
+
+    if (($_POST['action'] === 'userSignup')) {
+
+        $response = userSignup($_POST);
+        echo json_encode($response);
+        die();
+
+    }
+
+    if (($_POST['action'] === 'logOut')) {
+
+        $response = Logout();
+        echo json_encode($response);
+        die();
+
+    }
+
+
+
+}
+
+function Logout()
+{
+    if (isset($_SESSION['uid']) && !empty($_SESSION)) {
+        session_destroy();
+        return array('status' => true, 'base_url' => BASE_URL, 'message' => 'Logout successfully.');
+    }
+
+}
+function Login($data)
+{
+    // print_r($data);die();
+    global $db;
+    global $con;
+    if (!empty($data['email']) && !empty($data['password'])) {
+        $email = $data['email'];
+        $password = $data['password'];
+        if ($row = $db->fetch($con, 'users', array('email' => $email))) {
+            $row = $row[0];
+            if ($row['is_verified'] == 1) {
+                if ($row['status'] == 1) {
+                    if (password_verify($password, $row['password'])) {
+                        $_SESSION['uid'] = (int) $row['id'];
+                        $_SESSION['role'] = $row['roles'];
+                        $_SESSION['permission'] = $row['permissions'];
+                        //updateLogs($row);
+                        return array('status' => true, 'base_url' => BASE_URL, 'data' => $_SESSION, 'message' => 'Login successfully.');
+                    }
+                    return array('status' => false, 'message' => 'Login failed. The password may be wrong.');
+                }
+                return array('status' => false, 'message' => 'Login failed. Your account is disabled.');
+            }
+            return array('status' => false, 'message' => 'Login failed. Your account is not verified.');
+        }
+        return array('status' => false, 'message' => 'Login failed.  Please check your email and password.');
+    }
+    return array('status' => false, 'message' => 'Please enter valid email or password.');
+}
+
+
+function userSignup($data)
+{
+    global $db;
+    global $con;
+
+    if (!empty($data)) {
+        // Validate email
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return array('status' => false, 'message' => 'Please enter a valid email address.');
+        }
+
+        // Validate phone number
+        if (!validatePhone($data['phone'])) {
+            return array('status' => false, 'message' => 'Please enter a valid phone number.');
+        }
+        
+        if ((strlen($data['password']) >= 8) && ($data['password'] === $data['c_password'])) {
+
+           $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+
+            if ($db->exist($con, $data['email'], 'users')) {
+                return array('status' => false, 'message' => 'Email already exists.');
+            }
+
+            $insertArr = array(
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => '+91' . $data['phone'],
+                'password' => $data['password']
+            );
+            $result = $db->create($con, 'users', $insertArr);
+
+            if ($result) {
+                return array('status' => true, 'uid' => $result, 'message' => 'Your email has been registered successfully. You will be able to log in after your account is verified.');
+            } else {
+                return array('status' => false, 'message' => 'Failed to add user.');
+            }
+
+        } else {
+            return array('status' => false, 'message' => 'Password does not match.');
+        }
+    } else {
+        return array('status' => false, 'message' => 'Invalid data.');
+    }
+}
+
+
+function getBrowserAndOS($userAgent)
+{
+
+    $browsers = [
+        'Edge' => 'Edge',
+        'Trident' => 'Internet Explorer',
+        'MSIE' => 'Internet Explorer',
+        'Opera Mini' => 'Opera Mini',
+        'Opera|OPR' => 'Opera',
+        'Firefox' => 'Firefox',
+        'Chrome' => 'Chrome',
+        'Safari' => 'Safari',
+    ];
+
+    $osArray = [
+        'Windows NT 10.0' => 'Windows 10',
+        'Windows NT 6.3' => 'Windows 8.1',
+        'Windows NT 6.2' => 'Windows 8',
+        'Windows NT 6.1' => 'Windows 7',
+        'Windows NT 6.0' => 'Windows Vista',
+        'Windows NT 5.1' => 'Windows XP',
+        'Windows NT 5.0' => 'Windows 2000',
+        'Mac OS X' => 'Mac OS X',
+        'Android' => 'Android',
+        'Linux' => 'Linux',
+        'iPhone' => 'iPhone',
+        'iPad' => 'iPad',
+    ];
+
+    $browser = 'Unknown';
+    $os = 'Unknown';
+
+    // Detect Browser
+    foreach ($browsers as $key => $value) {
+        if (preg_match('/' . $key . '/i', $userAgent)) {
+            $browser = $value;
+            break;
+        }
+    }
+
+    // Detect Operating System
+    foreach ($osArray as $key => $value) {
+        if (preg_match('/' . $key . '/i', $userAgent)) {
+            $os = $value;
+            break;
+        }
+    }
+
+    return ['browser' => $browser, 'os' => $os];
+}
+
+function updateLogs($data)
+{
+    global $db;
+    global $con;
+
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    $info = getBrowserAndOS($userAgent);
+    $browser = $info['browser'];
+    $os = $info['os'];
+    $now = date("Y-m-d H:i:s");
+    $id = $data['id'];
+
+    $array = array(
+        'user_id' => $id,
+        'ip' => $_SERVER['REMOTE_ADDR'],
+        'browser' => $browser,
+        'platform' => $os,
+        'last_login' => $now
+    );
+
+    $db->create($con, 'login_logs', $array);
+    return true;
+}
+
+
+function validatePhone($phone)
+{
+    $phone = preg_replace('/[\s\-\(\)]+/', '', $phone);
+    if (preg_match('/^\d{10}$/', $phone)) {
+        return true;
+    } else {
+        return false;
+    }
+}

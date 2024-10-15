@@ -1,0 +1,110 @@
+document.addEventListener('DOMContentLoaded', function () {
+
+        // const pageLabels = {
+        //     'admin/index.html': 'Home',
+        //     'TfMap/index.html': 'TOPO Map',
+        //     'admin/roles.html': 'Roles',
+        //     'admin/logs.html': 'Logistics',
+        //     'admin/permissions.html': 'Permissions',
+        //     'admin/contacts.html': 'Contact',
+        //     'admin/users.html': 'Users',
+        //     'admin/adminConsole.html': 'Admin Console'
+        //  };
+    
+        // const navLinksContainer = document.getElementById('navLinksContainer');
+        // historyStack.push(window.location.href);
+        // sessionStorage.setItem('historyStack', JSON.stringify(historyStack));
+        // let historyStack = JSON.parse(sessionStorage.getItem('historyStack')) || [];
+        // console.log('History Stack:', historyStack); 
+        // historyStack.forEach((page, index) => {
+        //     if (index > 0) {
+        //         if (label) {
+        //             let link = document.createElement('a');
+        //             link.href = page;
+        //             link.textContent = label;
+        //             link.classList.add('nav-link');
+        //             navLinksContainer.appendChild(link);
+        //         }
+        //     }
+        // });
+
+    
+
+
+    fetch('../auth.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({ action: 'checkAuth' })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(res1 => {
+        if (res1.status === false) {
+            window.location.href = res1.redirectUrl;
+        } else {
+            var data = res1.data;
+            console.log(data);
+            
+            const uName = document.getElementById('u_name');
+            if (uName) {
+                uName.textContent = data.name;
+            } else {
+                console.error('Element with id "u_name" is missing from the DOM.');
+            }
+
+            const adminConsole = document.getElementById('adminConsole');
+            const tfMap = document.getElementById('TfMap');
+            const pifPermissions = document.getElementById('pifPermissions');
+            const pifRoles = document.getElementById('pifRoles');
+
+            if (adminConsole) {
+                if (data.isAdmin || data.isAll) {
+                    adminConsole.classList.add("dropdown-item");
+                    adminConsole.style.display = 'block';
+                } else {
+                    adminConsole.classList.remove("dropdown-item");
+                    adminConsole.style.display = 'none';
+                }
+            } else {
+                console.error('Element with id "adminConsole" is missing from the DOM.');
+            }
+
+            if (tfMap) {
+                if (data.isTopo || data.isAll) {
+                    tfMap.style.display = 'block';
+                } else {
+                    tfMap.style.display = 'none';
+                }
+            } 
+
+            if (pifPermissions) {
+                if (data.isAll) {
+                    pifPermissions.style.display = 'block';
+                } else {
+                    pifPermissions.style.display = 'none';
+                }
+            } else {
+                console.error('Element with id "pifPermissions" is missing from the DOM.');
+            }
+
+            if (pifRoles) {
+                if (data.isAll) {
+                    pifRoles.style.display = 'block';
+                } else {
+                    pifRoles.style.display = 'none';
+                }
+            } else {
+                console.error('Element with id "pifRoles" is missing from the DOM.');
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+});

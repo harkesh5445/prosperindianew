@@ -1,0 +1,67 @@
+<?php
+
+require_once 'db.php'; 
+global $db;
+global $con;
+
+$response = array();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (!empty($_POST)) {
+
+        $data = array(
+            'name' => $_POST['name'],
+            'lastname' => $_POST['lastname'],
+            'email' => isset($_POST['email']) ? $_POST['email'] : '',
+            'phone' => $_POST['country_code'] . $_POST['phone'],
+            'message' => $_POST['message']
+        );
+
+        if (!empty($_POST['email']) && (validateEmail($_POST['email']) == false)) {
+            $response = array('status' => false, 'message' => 'Please enter valid email.');
+            echo json_encode($response);
+            die;
+        }
+        
+        if (validatePhone($_POST['phone'])) {
+            if ($db->create($con, 'contact_us', $data)) {  
+                $response = array('status' => true, 'message' => 'Your message has been sent successfully. We will contact you soon.');
+            } else {
+
+                $response = array('status' => false, 'message' => 'Your message could not be sent.');
+            }
+        } else {
+            $response = array('status' => false, 'message' => 'Please enter valid phone number.');
+        }
+    } else {
+        $response = array('status' => false, 'message' => 'Invalid data.');
+    }
+
+    echo json_encode($response);
+    die;
+}
+
+function validateEmail($email)
+{
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+function validatePhone($phone)
+{
+    $phone = preg_replace('/[\s\-\(\)]+/', '', $phone);
+    if (preg_match('/^\d{10}$/', $phone)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+

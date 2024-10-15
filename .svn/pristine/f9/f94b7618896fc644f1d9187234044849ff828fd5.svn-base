@@ -1,0 +1,71 @@
+$(document).ready(function () {
+
+    $('#send').click(function (event) {
+      //alert("contact-form");
+        event.preventDefault();
+        var isValid = true;
+        $('#contact-form input, #contact-form textarea').each(function() {
+
+            var fieldName = $(this).attr('name');
+                    if (fieldName === 'email') {
+                        return true; 
+                    }
+
+            if ($(this).val().trim() === '') {
+                isValid = false;
+               // var errorMessage = `*`;
+                $('#'+fieldName).css('border', '1px solid red');
+               //  $('#s'+fieldName).html(errorMessage);
+            } else{
+               // var errorMessage = `*`;
+                $('#'+fieldName).css('border', '1px solid #95fdff');
+                // $('#s'+fieldName).html(errorMessage);
+            }
+        });
+        
+        if(isValid) {
+
+        var formData = $('#contact-form').serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'contact.php',
+            data : formData,
+            chache: false,
+            success: function (response) {
+                console.log(response);
+                var data = JSON.parse(response);
+                if (data.status === true) {
+                    $('#response').html(` <div class="alert1 success1">${data.message}</div>`);
+                    showAlert('.success1', 5000);
+                    $("#contact-form")[0].reset();
+                } else {
+                    $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                    showAlert('.failed1', 5000);
+                   // $("#contact-form")[0].reset();
+                }
+            },
+            error: function () {
+                $('#response').html(` <div class="alert1 failed1">${data.message}</div>`);
+                showAlert('.failed1', 5000);
+               // $("#contact-form")[0].reset();
+            }
+        });
+      }
+    });
+
+    function showAlert(selector, duration) {
+        $(selector)
+            .addClass('show')
+            .delay(duration)
+            .queue(function () {
+                $(this).removeClass('show').dequeue();
+            });
+    }
+
+   
+
+});
+
+function  test(id){
+    $('#'+id).css('border', '1px solid #95fdff');
+  }

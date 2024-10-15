@@ -1,0 +1,44 @@
+
+
+fetch('../auth.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({ action: 'checkAuth' })
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(res1 => {
+        if (res1.status === false) {
+            window.location.href = res1.redirectUrl;
+        } else {
+            var data = res1.data;
+            console.log(data);
+            document.getElementById('u_name').textContent = data.name;
+            if (data.isAdmin && !data.isTopo) {
+                document.getElementById("adminConsole").classList.add("dropdown-item");
+                document.getElementById('adminConsole').style.display = 'block';
+                document.getElementById('TfMap').style.display = 'none';
+            } else if (data.isTopo && !data.isAdmin) {
+                document.getElementById("adminConsole").classList.remove("dropdown-item");
+                document.getElementById('TfMap').style.display = 'block';
+                document.getElementById('adminConsole').style.display = 'none';
+            } else if (data.isTopo && data.isAdmin) {
+                document.getElementById("adminConsole").classList.add("dropdown-item");
+                document.getElementById('adminConsole').style.display = 'block';
+                document.getElementById('TfMap').style.display = 'block';
+            } else {
+                document.getElementById("adminConsole").classList.remove("dropdown-item");
+                document.getElementById('adminConsole').style.display = 'none';
+                document.getElementById('TfMap').style.display = 'none';
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });

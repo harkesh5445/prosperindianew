@@ -1,0 +1,374 @@
+/* //@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'); */
+
+.alert1 {
+  position: fixed;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.success1 {
+  color: green;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+.failed1 {
+  color: red;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+.show {
+  opacity: 1;
+}
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+header {
+  background-color: #2568b0;
+}
+
+.spncontainer {
+    margin-top: 150px;
+    /* min-height: 100vh; */
+}
+
+.cuslogo {
+  width: 26%;
+  height: auto;
+}
+
+#myHeader {
+  position: fixed !important;
+  top: 0 !important;
+  width: 100% !important;
+  z-index: 2 !important;
+}
+
+header .navbar-brand {
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+header .nav-link {
+  color: rgb(255 255 255) !important;
+  font-size: 16px;
+}
+
+section {
+  margin-top: 50px;
+}
+
+section h2 {
+  margin-bottom: 30px;
+}
+
+section p {
+  font-size: 1.1rem;
+}
+
+.image-container {
+  text-align: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.form-title {
+  margin: -2rem 0rem 2rem;
+}
+
+.btn-round {
+  border-radius: 3rem;
+}
+
+.btn-outline-dark {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+* {
+  font-family: Poppins-Regular;
+}
+
+@media screen and (max-width: 992px) {
+  .moblogo {
+    display: flex;
+  }
+  .cuslogo {
+    width: 23%;
+    height: auto;
+  }
+
+  #home {
+    margin-top: -50px;
+  }
+}
+
+/* @media screen and (max-width: 500px) {
+  .cuslogo {
+    width: 43%;
+    height: auto;
+  }
+} */
+
+@media screen and (max-width: 768px) {
+  .cuslogo {
+    width: 32%;
+    height: auto;
+  }
+}
+
+.navbar {
+  background-color: #00274c; /* Professional dark blue */
+}
+.nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-link:hover {
+  color: #ffd700 !important; /* Gold color on hover */
+}
+.btn-login {
+  border-color: #ffd700;
+  color: #ffd700;
+  transition: background-color 0.3s, color 0.3s;
+}
+.btn-login:hover {
+  background-color: #ffd700;
+  color: #00274c;
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  background-color: #003366;
+}
+.dropdown-item {
+  color: #ffffff;
+  transition: background-color 0.3s, color 0.3s;
+}
+.dropdown-item:hover {
+  /* background-color: #0055a5; */
+  background-color: #003366;
+  color: #ffd700;
+}
+
+
+/* Footer Styles */
+.footer {
+    background: linear-gradient(135deg, #00274c 0%, #003366 100%);  
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;  
+  }
+  
+  .footer h5 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer p, .footer li, .footer a {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .footer a:hover {
+    color: #ffd700; /* Gold color on hover */
+  }
+  
+  .footer .social-icons a {
+    transition: color 0.3s, transform 0.3s;
+  }
+  
+  .footer .social-icons a:hover {
+    color: #ffd700;
+    transform: scale(1.2); /* Slightly enlarge icon on hover */
+  }
+  
+  .footer hr {
+    margin: 0 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .footer .row > div {
+      margin-bottom: 1rem;
+    }
+  
+    .footer .social-icons a {
+      margin-right: 1rem;
+    }
+  }
+  
+  
+  /* Footer Links */
+  .footer-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #007bff;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  /* Footer Icon Colors */
+  .footer-link i {
+    margin-right: 8px;
+  }
+  
+  .footer-link:hover i {
+    color: #007bff;
+  }
+  
+
+  .dropdown-submenu {
+    position: relative;
+  }
+  
+  .dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 80%;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+  }
+  
+  /* Ensure the submenu appears on hover */
+  .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+  }
+  
+  /* Adjust the positioning on smaller screens */
+  @media (max-width: 992px) {
+    .dropdown-submenu > .dropdown-menu {
+      left: 0;
+      margin-left: 0;
+      margin-top: 0.1rem;
+    }
+  }
+
+  .btn-outline-dark {
+    color: #fff !important;
+    border-color: #fff !important;
+    font-size: larger !important;
+}
+
+header .nav-link {
+    color: rgb(255 255 255) !important;
+    font-size: 20px!important;
+}
+
+.dropdown-submenu .dropdown-toggle::after {
+    display: none !important;
+}
+.fa-angle-right{
+    font-size: large;
+    margin-left: 10px!important;
+}
+
+.navbar-nav .nav-item {
+    white-space: nowrap!important;
+}
+
+.mtt{
+  margin-top: 7rem!important;
+}
+
+
+  .loader-container {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+
+
+ /* Loader Styles */
+
+ /* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-size: 40px;
+  line-height: 1.5;
+  font-family: system-ui,sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #0000;
+  -webkit-text-stroke: 1px #000;
+  background:
+    radial-gradient(1.13em at 50% 1.6em,#000 99%,#0000 101%) calc(50% - 1.6em) 0/3.2em 100% text,
+    radial-gradient(1.13em at 50% -0.8em,#0000 99%,#000 101%) 50% .8em/3.2em 100% repeat-x  text;
+  animation: l9 2s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001; /* Keep loader on top */
+  display: none;
+}
+.loader:before {
+  content: "Sending....";
+}
+@keyframes l9 {
+  to {background-position: calc(50% + 1.6em) 0,calc(50% + 3.2em) .8em}
+}
+
+
+@keyframes l17 {
+  100% {
+      background-size: 120% 100%;
+  }
+}
+
+/* Apply blur to the content only */
+.blur-page {
+  filter: blur(5px); /* Blur content */
+  pointer-events: none; /* Disable interactions with blurred content */
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+
+
+.about-section {
+  padding: 60px 0;
+}
+
+.about-section img {
+  border-radius: 10px;
+}
+
+.footer-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #ffeb3b;
+  text-decoration: none;
+}
+
+.btn-outline-dark {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.btn-outline-dark:hover {
+  background-color: #000000;
+  color: #004d40;
+}

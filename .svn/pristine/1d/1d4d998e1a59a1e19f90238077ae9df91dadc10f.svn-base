@@ -1,0 +1,374 @@
+<?php
+
+require_once 'db.php';
+
+$response = array();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (($_POST['action'] === 'userLogin')) {
+
+        $response = Login($_POST);
+        echo json_encode($response);
+        die();
+
+    }
+
+    if (($_POST['action'] === 'userSignup')) {
+
+        $response = userSignup($_POST);
+        echo json_encode($response);
+        die();
+
+    }
+
+    if (($_POST['action'] === 'logOut')) {
+
+        $response = Logout();
+        echo json_encode($response);
+        die();
+
+    }
+
+    if (($_POST['action'] === 'checkAuth')) {
+
+        $response = checkAuth();
+        echo json_encode($response);
+        die();
+
+    }
+
+    if (($_POST['action'] === 'checkPermission')) {
+        $response = checkPermission($_POST);
+        echo json_encode($response);
+        die();
+
+    }
+
+
+
+}
+
+function checkPermission($data)
+{
+
+    $response = array('status' => false);
+
+
+    if (isset($_SESSION['uid']) && !empty($_SESSION)) {
+        $permissions = $_SESSION['permissions'];
+        $url = $data['url'];
+
+        if (strpos($url, 'TfMap') !== false) {
+            if (in_array('TfMap', $permissions)) {
+                $response['status'] = true;
+
+            }
+        } elseif (
+            strpos($url, 'adminConsole') !== false || strpos($url, 'users') !== false ||
+            strpos($url, 'roles') !== false || strpos($url, 'permissions') !== false ||
+            strpos($url, 'logs') !== false || strpos($url, 'contacts') !== false
+        ) {
+            if (in_array('admin', $permissions)) {
+                $response['status'] = true;
+
+            }
+        }
+
+    }
+
+    return $response;
+}
+
+function checkAuth()
+{
+    global $db;
+    global $con;
+    $permissions = array();
+    if (isset($_SESSION['uid']) && !empty($_SESSION)) {
+      
+        $USER_PERMISSIONS = $db->fetch($con, USER_PERMISSIONS, array('user_id' => $_SESSION['uid'],'status'=>1));
+      
+       // print_r($USER_PERMISSIONS);die;
+        if ($USER_PERMISSIONS) {
+            foreach ($USER_PERMISSIONS as $key => $value) {
+                $res = $db->fetch($con, PERMISSIONS, array('id' => $value['permission_id']));
+                $permissions[] = $res[0]['name'];
+            }
+            array_values($permissions);
+        }else{
+            $permissions = $_SESSION['permissions'];
+        }
+
+        //$permissions = $_SESSION['permissions'];
+        $isAdmin = false;
+        $isTopo = false;
+        $isAll = false;
+        if (in_array("topo", $permissions) && !in_array("admin", $permissions)) {
+            $isTopo = true;
+            $loginData = array(
+                'isTopo' => $isTopo,
+                'isAll' => $isAll,
+                'isAdmin' => $isAdmin,
+                'name' => $_SESSION['u_name'],
+                'uid' => $_SESSION['uid']
+            );
+            return array('status' => true, 'data' => $loginData, 'redirectUrl' => BASE_URL . 'admin/index.html');
+        }
+
+        if (in_array("admin", $permissions) && !in_array("topo", $permissions)) {
+            $isAdmin = true;
+            $loginData = array(
+                'isAll' => $isAll,
+                'isTopo' => $isTopo,
+                'isAdmin' => $isAdmin,
+                'name' => $_SESSION['u_name'],
+                'uid' => $_SESSION['uid']
+            );
+            return array('status' => true, 'data' => $loginData, 'redirectUrl' => BASE_URL . 'admin/index.html');
+        }
+
+        if (in_array("admin", $permissions) && in_array("topo", $permissions)) {
+            $isAdmin = true;
+            $isTopo = true;
+            $loginData = array(
+                'isAll' => $isAll,
+                'isTopo' => $isTopo,
+                'isAdmin' => $isAdmin,
+                'name' => $_SESSION['u_name'],
+                'uid' => $_SESSION['uid']
+            );
+
+            return array('status' => true, 'data' => $loginData, 'redirectUrl' => BASE_URL . 'admin/index.html');
+        }
+
+        if (in_array("user", $permissions) && !in_array("topo", $permissions) && !in_array("admin", $permissions)) {
+            $loginData = array(
+                'isAll' => $isAll,
+                'isTopo' => $isTopo,
+                'isAdmin' => $isAdmin,
+                'name' => $_SESSION['u_name'],
+                'uid' => $_SESSION['uid']
+            );
+            return array('status' => true, 'data' => $loginData, 'redirectUrl' => BASE_URL . 'admin/index.html');
+        }
+
+        if (in_array("all", $permissions)) {
+            $isAll = true;
+            $loginData = array(
+                'isAll' => $isAll,
+                'isTopo' => $isTopo,
+                'isAdmin' => $isAdmin,
+                'name' => $_SESSION['u_name'],
+                'uid' => $_SESSION['uid']
+            );
+            return array('status' => true, 'data' => $loginData, 'redirectUrl' => BASE_URL . 'admin/index.html');
+        }
+
+
+    } else {
+
+        return array('status' => false, 'redirectUrl' => BASE_URL . 'login.html');
+
+    }
+
+}
+
+function Logout()
+{
+    if (isset($_SESSION['uid']) && !empty($_SESSION)) {
+        session_unset();
+        session_destroy();
+        return array('status' => true, 'base_url' => BASE_URL, 'message' => 'Logout successfully.');
+    } else {
+        return array('status' => true, 'base_url' => BASE_URL, 'message' => 'Logout successfully.');
+    }
+
+}
+function Login($data)
+{
+    // print_r($data);die();
+    global $db;
+    global $con;
+    if (!empty($data['email']) && !empty($data['password'])) {
+        $email = $data['email'];
+        $password = $data['password'];
+        if ($row = $db->fetch($con, USERS, array('email' => $email))) {
+            $row = $row[0];
+            if ($row['is_verified'] == 1) {
+                if ($row['status'] == 1) {
+                    if ($row['isDeleted'] == 0) {
+                        if (password_verify($password, $row['password'])) {
+                            $_SESSION['uid'] = (int) $row['id'];
+                            $_SESSION['u_name'] = $row['name'];
+
+                            $user_permissions = $db->fetch($con,USER_PERMISSIONS, array('user_id' => $row['id'], 'status' => 1));
+                            if (!empty($user_permissions)) {
+                                $permissions = array();
+                                $roles = array();
+                                foreach ($user_permissions as $key => $value) {
+                                    $permissionData = $db->fetch($con, PERMISSIONS, array('id' => $value['permission_id']));
+                                    // print_r($permissionData);die;
+                                    $permissions[] = $permissionData[0]['name'];
+                                    $roleData = $db->fetch($con, ROLES, array('id' => $value['role_id']));
+                                    //print_r($roleData);
+                                    $roles[] = isset($roleData[0]['name']) ?: '';
+                                }
+                                // die;
+                                $_SESSION['permissions'] = array_values($permissions);
+                                $_SESSION['roles'] = array_values($roles);
+                            }
+                            // print_r($response);die;
+                            updateLogs($row);
+                            return array('status' => true, 'base_url' => BASE_URL, 'data' => $_SESSION, 'message' => 'Login successfully.');
+                        }
+                        return array('status' => false, 'message' => 'Login failed. The password may be wrong.');
+                    }
+                    return array('status' => false, 'message' => 'Login failed. Your account is deleted.');
+                }
+                return array('status' => false, 'message' => 'Login failed. Your account is disabled.');
+            }
+            return array('status' => false, 'message' => 'Login failed. Your account is not verified.');
+        }
+        return array('status' => false, 'message' => 'Login failed.  Please check your email and password.');
+    }
+    return array('status' => false, 'message' => 'Please enter valid email or password.');
+}
+
+
+function userSignup($data)
+{
+    global $db;
+    global $con;
+
+    if (!empty($data)) {
+        // Validate email
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return array('status' => false, 'message' => 'Please enter a valid email address.');
+        }
+
+        // Validate phone number
+        if (!validatePhone($data['phone'])) {
+            return array('status' => false, 'message' => 'Please enter a valid phone number.');
+        }
+
+        if ((strlen($data['password']) >= 8) && ($data['password'] === $data['c_password'])) {
+
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+
+            if ($db->exist($con, $data['email'], USERS)) {
+                return array('status' => false, 'message' => 'Email already exists.');
+            }
+
+            $insertArr = array(
+
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => '+91' . $data['phone'],
+                'password' => $data['password']
+            );
+            $result = $db->create($con, USERS, $insertArr);
+
+            if ($result) {
+                $insert = array('user_id' => $result, 'permission_id' => 2, 'role_id' => 2);
+                $db->create($con, USER_PERMISSIONS, $insert);
+
+                return array('status' => true, 'uid' => $result, 'message' => 'Your email has been registered successfully. You will be able to log in after your account is verified.');
+            } else {
+                return array('status' => false, 'message' => 'Failed to add user.');
+            }
+
+        } else {
+            return array('status' => false, 'message' => 'Password does not match.');
+        }
+    } else {
+        return array('status' => false, 'message' => 'Invalid data.');
+    }
+}
+
+
+function getBrowserAndOS($userAgent)
+{
+
+    $browsers = [
+        'Edge' => 'Edge',
+        'Trident' => 'Internet Explorer',
+        'MSIE' => 'Internet Explorer',
+        'Opera Mini' => 'Opera Mini',
+        'Opera|OPR' => 'Opera',
+        'Firefox' => 'Firefox',
+        'Chrome' => 'Chrome',
+        'Safari' => 'Safari',
+    ];
+
+    $osArray = [
+        'Windows NT 10.0' => 'Windows 10',
+        'Windows NT 6.3' => 'Windows 8.1',
+        'Windows NT 6.2' => 'Windows 8',
+        'Windows NT 6.1' => 'Windows 7',
+        'Windows NT 6.0' => 'Windows Vista',
+        'Windows NT 5.1' => 'Windows XP',
+        'Windows NT 5.0' => 'Windows 2000',
+        'Mac OS X' => 'Mac OS X',
+        'Android' => 'Android',
+        'Linux' => 'Linux',
+        'iPhone' => 'iPhone',
+        'iPad' => 'iPad',
+    ];
+
+    $browser = 'Unknown';
+    $os = 'Unknown';
+
+    // Detect Browser
+    foreach ($browsers as $key => $value) {
+        if (preg_match('/' . $key . '/i', $userAgent)) {
+            $browser = $value;
+            break;
+        }
+    }
+
+    // Detect Operating System
+    foreach ($osArray as $key => $value) {
+        if (preg_match('/' . $key . '/i', $userAgent)) {
+            $os = $value;
+            break;
+        }
+    }
+
+    return ['browser' => $browser, 'os' => $os];
+}
+
+function updateLogs($data)
+{
+    global $db;
+    global $con;
+
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    $info = getBrowserAndOS($userAgent);
+    $browser = $info['browser'];
+    $os = $info['os'];
+    $now = date("Y-m-d H:i:s");
+    $id = $data['id'];
+
+    $array = array(
+        'user_id' => $id,
+        'ip' => $_SERVER['REMOTE_ADDR'],
+        'browser' => $browser,
+        'platform' => $os,
+        'last_login' => $now
+    );
+
+    $db->create($con, LOGIN_LOGS, $array);
+    return true;
+}
+
+
+function validatePhone($phone)
+{
+    $phone = preg_replace('/[\s\-\(\)]+/', '', $phone);
+    if (preg_match('/^\d{10}$/', $phone)) {
+        return true;
+    } else {
+        return false;
+    }
+}
